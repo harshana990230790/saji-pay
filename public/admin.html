@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -6,175 +5,40 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>SAJI PAY ADMIN PANEL</title>
 <style>
-body{font-family:Arial,sans-serif;background:#f5f5f5;padding:20px}
+body{font-family:Arial,sans-serif;background:#f5f5f5;margin:0;padding:20px}
 .card{background:#fff;padding:20px;border-radius:10px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
 table{width:100%;border-collapse:collapse}
 th,td{border:1px solid #ddd;padding:10px;text-align:center}
 th{background:#00d9ff;color:#fff}
 input{padding:10px;width:100%;max-width:300px;margin-bottom:15px}
-button{padding:6px 12px;margin:2px}
+button{padding:8px 12px;border:none;border-radius:6px;background:#00bcd4;color:#fff;cursor:pointer}
 </style>
 </head>
 <body>
 <h1>SAJI PAY ADMIN PANEL</h1>
-
 <div class="card">
 <h2>Total Members: <span id="total">0</span></h2>
 <input id="search" placeholder="Search name or phone">
 <button id="csvBtn">Download CSV</button>
 </div>
-
 <div class="card">
 <table>
-<thead>
-<tr>
-<th>Name</th><th>WhatsApp</th><th>Date</th><th>Action</th>
-</tr>
-</thead>
+<thead><tr><th>Name</th><th>WhatsApp</th><th>Date</th><th>Action</th></tr></thead>
 <tbody id="members"></tbody>
 </table>
 </div>
-
 <script type="module">
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
 import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyBU8uMz4pUH_PIgfQo462xhCX0omhxIOAY",
-  authDomain: "saji-pay-pro.firebaseapp.com",
-  projectId: "saji-pay-pro",
-  storageBucket: "saji-pay-pro.firebasestorage.app",
-  messagingSenderId: "33717137910",
-  appId: "1:33717137910:web:53dcc4237644f63a7b97d7",
-  measurementId: "G-L37Y2NLY1P"
-};
+const firebaseConfig={apiKey:"AIzaSyBU8uMz4pUH_PIgfQo462xhCX0omhxIOAY",authDomain:"saji-pay-pro.firebaseapp.com",projectId:"saji-pay-pro",storageBucket:"saji-pay-pro.firebasestorage.app",messagingSenderId:"33717137910",appId:"1:33717137910:web:53dcc4237644f63a7b97d7"};
 const app=initializeApp(firebaseConfig);
 const db=getFirestore(app);
-
 let members=[];
-
-async function loadMembers(){
- const snap=await getDocs(collection(db,"members"));
- members=[];
- snap.forEach(doc=>members.push({id:doc.id,...doc.data()}));
- document.getElementById("total").textContent=members.length;
- render(members);
-}
-
-function render(list){
- const body=document.getElementById("members");
- body.innerHTML=list.map(d=>`
- <tr>
- <td>${d.name||"-"}</td>
- <td>${d.phone||"-"}</td>
- <td>${d.createdAt?.toDate?d.createdAt.toDate().toLocaleString():"-"}</td>
- <td><button onclick="window.open('https://wa.me/94'+(d.phone||'').replace(/^0/,''),'_blank')">WhatsApp</button></td>
- </tr>`).join("");
-}
-
-document.getElementById("search").addEventListener("input",e=>{
- const q=e.target.value.toLowerCase();
- render(members.filter(m=>(m.name||"").toLowerCase().includes(q)||(m.phone||"").includes(q)));
-});
-
-document.getElementById("csvBtn").onclick=()=>{
- let csv="Name,Phone\n"+members.map(m=>`${m.name||""},${m.phone||""}`).join("\n");
- const a=document.createElement("a");
- a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
- a.download="members.csv";
- a.click();
-};
-
+async function loadMembers(){const snap=await getDocs(collection(db,"members"));members=[];snap.forEach(doc=>members.push({id:doc.id,...doc.data()}));document.getElementById("total").textContent=members.length;render(members);}
+function render(list){document.getElementById("members").innerHTML=list.map(d=>`<tr><td>${d.name??"-"}</td><td>${d.phone??"-"}</td><td>${d.createdAt?.toDate?d.createdAt.toDate().toLocaleString():"-"}</td><td><button onclick="window.open('https://wa.me/94'+String('${d.phone??""}').replace(/^0/,''),'_blank')">WhatsApp</button></td></tr>`).join("");}
+document.getElementById("search").addEventListener("input",e=>{const q=e.target.value.toLowerCase();render(members.filter(m=>(m.name||"").toLowerCase().includes(q)||(m.phone||"").includes(q)));});
+document.getElementById("csvBtn").onclick=()=>{const csv="Name,Phone\n"+members.map(m=>`${m.name||""},${m.phone||""}`).join("\n");const a=document.createElement("a");a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));a.download="members.csv";a.click();};
 loadMembers();
 </script>
 </body>
-=======
-<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>SAJI PAY ADMIN PANEL</title>
-<style>
-body{font-family:Arial,sans-serif;background:#f5f5f5;padding:20px}
-.card{background:#fff;padding:20px;border-radius:10px;margin-bottom:20px;box-shadow:0 2px 8px rgba(0,0,0,.1)}
-table{width:100%;border-collapse:collapse}
-th,td{border:1px solid #ddd;padding:10px;text-align:center}
-th{background:#00d9ff;color:#fff}
-input{padding:10px;width:100%;max-width:300px;margin-bottom:15px}
-button{padding:6px 12px;margin:2px}
-</style>
-</head>
-<body>
-<h1>SAJI PAY ADMIN PANEL</h1>
-
-<div class="card">
-<h2>Total Members: <span id="total">0</span></h2>
-<input id="search" placeholder="Search name or phone">
-<button id="csvBtn">Download CSV</button>
-</div>
-
-<div class="card">
-<table>
-<thead>
-<tr>
-<th>Name</th><th>WhatsApp</th><th>Date</th><th>Action</th>
-</tr>
-</thead>
-<tbody id="members"></tbody>
-</table>
-</div>
-
-<script type="module">
-import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-import { getFirestore, collection, getDocs } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-const firebaseConfig = {
-  apiKey: "AIzaSyBU8uMz4pUH_PIgfQo462xhCX0omhxIOAY",
-  authDomain: "saji-pay-pro.firebaseapp.com",
-  projectId: "saji-pay-pro",
-  storageBucket: "saji-pay-pro.firebasestorage.app",
-  messagingSenderId: "33717137910",
-  appId: "1:33717137910:web:53dcc4237644f63a7b97d7",
-  measurementId: "G-L37Y2NLY1P"
-};
-const app=initializeApp(firebaseConfig);
-const db=getFirestore(app);
-
-let members=[];
-
-async function loadMembers(){
- const snap=await getDocs(collection(db,"members"));
- members=[];
- snap.forEach(doc=>members.push({id:doc.id,...doc.data()}));
- document.getElementById("total").textContent=members.length;
- render(members);
-}
-
-function render(list){
- const body=document.getElementById("members");
- body.innerHTML=list.map(d=>`
- <tr>
- <td>${d.name||"-"}</td>
- <td>${d.phone||"-"}</td>
- <td>${d.createdAt?.toDate?d.createdAt.toDate().toLocaleString():"-"}</td>
- <td><button onclick="window.open('https://wa.me/94'+(d.phone||'').replace(/^0/,''),'_blank')">WhatsApp</button></td>
- </tr>`).join("");
-}
-
-document.getElementById("search").addEventListener("input",e=>{
- const q=e.target.value.toLowerCase();
- render(members.filter(m=>(m.name||"").toLowerCase().includes(q)||(m.phone||"").includes(q)));
-});
-
-document.getElementById("csvBtn").onclick=()=>{
- let csv="Name,Phone\n"+members.map(m=>`${m.name||""},${m.phone||""}`).join("\n");
- const a=document.createElement("a");
- a.href=URL.createObjectURL(new Blob([csv],{type:"text/csv"}));
- a.download="members.csv";
- a.click();
-};
-
-loadMembers();
-</script>
-</body>
->>>>>>> 888afccaa7762451d0b74fc54e1b7209a7223396
 </html>
