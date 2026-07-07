@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>SAJI PAY CASH AGENT SERVICE</title>
+
+<style>
+body{
+    font-family:Arial,sans-serif;
+    background:#f5f7fb;
+    text-align:center;
+    padding:20px;
+}
+.card{
+    background:#fff;
+    max-width:500px;
+    margin:auto;
+    padding:20px;
+    border-radius:10px;
+    box-shadow:0 0 10px rgba(0,0,0,.1);
+}
+input{
+    width:90%;
+    padding:12px;
+    margin:10px;
+}
+button{
+    background:#00cfe8;
+    color:white;
+    border:none;
+    padding:12px 20px;
+    cursor:pointer;
+}
+</style>
+</head>
+
+<body>
+
+<div class="card">
+    <h1>SAJI PAY CASH AGENT SERVICE</h1>
+
+    <h3>Member Login / Register</h3>
+
+    <input id="name" placeholder="Email">
+    <input id="phone" placeholder="WhatsApp Number">
+
+    <button onclick="SaveMember()">
+        Login / Register
+    </button>
+
+    <p id="msg"></p>
+</div>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import {
+  getFirestore,
+  collection,
+  addDoc
+} from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyBU8uMz4pUH_PIgfQo462xhCX0omhxIOAY",
+  authDomain: "saji-pay-pro.firebaseapp.com",
+  projectId: "saji-pay-pro",
+  storageBucket: "saji-pay-pro.firebasestorage.app",
+  messagingSenderId: "33717137910",
+  appId: "1:33717137910:web:53dcc4237644f63a7b97d7",
+  measurementId: "G-L37Y2NLY1P"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+window.SaveMember = async function() {
+
+    const name =
+        document.getElementById("name").value.trim();
+
+    const phone =
+        document.getElementById("phone").value.trim();
+
+    if(!name || !phone){
+        alert("නම සහ WhatsApp අංකය ඇතුලත් කරන්න");
+        return;
+    }
+
+    try{
+
+        await addDoc(collection(db,"members"),{
+            name:name,
+            phone:phone,
+            active:true,
+            createdAt:new Date()
+        });
+
+        document.getElementById("msg").innerHTML =
+            "✅ Registration Successful";
+
+    }catch(error){
+
+        console.log(error);
+
+        document.getElementById("msg").innerHTML =
+            "❌ "+error.message;
+    }
+}
+
+</script>
+
+</body>
+</html>

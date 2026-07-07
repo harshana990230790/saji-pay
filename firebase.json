@@ -1,0 +1,14 @@
+{
+  "hosting": {
+    "public": "public",
+    "ignore": [
+      "firebase.json",
+      "**/.*",
+      "**/node_modules/**"
+    ]
+  }
+<<<<<<< HEAD
+}
+=======
+}
+>>>>>>> 888afccaa7762451d0b74fc54e1b7209a7223396
